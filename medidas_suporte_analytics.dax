@@ -1,0 +1,35 @@
+Total Chamados =
+COUNT('public vw_chamados_completos'[id_chamado])
+
+Chamados Resolvidos =
+CALCULATE(
+    [Total Chamados],
+    'public vw_chamados_completos'[status] = "RESOLVIDO"
+)
+
+Chamados Abertos =
+CALCULATE(
+    [Total Chamados],
+    'public vw_chamados_completos'[status] = "ABERTO"
+)
+
+Chamados Em Andamento =
+CALCULATE(
+    [Total Chamados],
+    'public vw_chamados_completos'[status] = "EM ANDAMENTO"
+)
+
+Chamados Criticos =
+CALCULATE(
+    [Total Chamados],
+    'public vw_chamados_completos'[prioridade] = "CRITICA"
+)
+
+Tempo Medio Resolucao =
+AVERAGE('public vw_chamados_completos'[tempo_resolucao_horas])
+
+Taxa Resolucao =
+DIVIDE([Chamados Resolvidos], [Total Chamados], 0)
+
+Fila Ativa =
+[Chamados Abertos] + [Chamados Em Andamento]
